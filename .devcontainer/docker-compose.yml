@@ -1,0 +1,27 @@
+version: '3.9'
+
+services:
+    app:
+        build:
+            context: .
+            dockerfile: Dockerfile
+            args:
+                USER_UID: 1000
+                USER_GID: 1000
+        ports:
+            - 60012:8080
+        volumes:
+            - ..:/workspace:cached
+        command: sleep infinity
+
+    mongodb:
+        image: mongo:latest
+        restart: always
+        ports:
+            - 27018:27017
+        volumes:
+            - mongodb_data:/data/db
+
+volumes:
+    mongodb_data:
+        driver: local

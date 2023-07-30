@@ -23,3 +23,4 @@ export const baseSchema = new mongoose.Schema(
 );
 
 export * from "./UserRepo";
+export * from "./MailRepo";

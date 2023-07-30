@@ -34,10 +34,6 @@ const main = async () => {
   initializeApp({ credential: credential.cert(FIREBASE_SERVICE_ACCOUNT) });
   const authInstance = auth();
   const storageInstance = storage();
-  const firestoreInstance = firestore();
-  const firestoreEnvCollection = firestoreInstance.collection(
-    DEV ? "staging" : "production"
-  );
 
   const userRepo = await UserRepo(database);
 

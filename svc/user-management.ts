@@ -52,7 +52,6 @@ export const UserManagementSvc = (
       firebaseUser = await auth.createUser({
         displayName: data.displayName,
         email: data.email,
-        password: data.password,
       });
     }
 

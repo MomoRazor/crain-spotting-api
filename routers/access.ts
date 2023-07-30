@@ -5,6 +5,7 @@ import {
   PermissionExpression,
 } from "@sector-eleven-ltd/cosmos-core";
 import { AccessType, accessNeededByEndpoint } from "../types";
+import { IAccessSvc } from "../svc";
 
 type EndpointList<ReturnType = PermissionExpression<string>[]> = {
   [key in string]: ReturnType;
@@ -46,7 +47,7 @@ const getUrlPermissions = (
 };
 
 // RBAC Router
-export const AccessRouter = (userManagementSvc: IUserManagementSvc) => {
+export const AccessRouter = (accessSvc: IAccessSvc) => {
   const router = Router();
 
   router.use(async (_, res, next) => {
@@ -58,11 +59,8 @@ export const AccessRouter = (userManagementSvc: IUserManagementSvc) => {
           throw customError("Credentials not found from Auth", 403);
         }
 
-        const { user, role } = await userManagementSvc.getUserByEmail(
-          credentials.email
-        );
+        const user = await accessSvc.login(credentials.email);
 
-        res.locals.role = role;
         res.locals.user = user;
       }
 
@@ -102,7 +100,7 @@ export const AccessRouter = (userManagementSvc: IUserManagementSvc) => {
         throw customError("Credentials not found from Auth", 403);
       }
 
-      const result = await userManagementSvc.login(credentials.email);
+      const result = await accessSvc.login(credentials.email);
 
       res.status(200).json(result);
     } catch (e: any) {

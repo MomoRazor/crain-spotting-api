@@ -8,7 +8,8 @@
     "start": "node ./dist/server.js",
     "lint": "next lint",
     "check": "npx npm-check -u -E",
-    "test": "jest"
+    "test": "jest",
+    "build": "tsc"
   },
   "author": "",
   "license": "ISC",
